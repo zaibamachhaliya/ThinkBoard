@@ -3,7 +3,7 @@ import Note from "../models/Note.js";
 
 export async function getAllNotes(_,res) {  
    try {
-    const notes = await Note.find().sort({createdAt: -1});//newest first->-1 will sort in descending order
+    const notes = await Note.find().sort({position: 1, createdAt: -1});// position ascending, then newest first
     res.status(200).json(notes); 
    } catch (error) {
     console.error("Error inn getAll Notes controller:", error);
@@ -26,8 +26,13 @@ export async function getNoteById(req,res) {
 
 export async function createNote(req,res) {
  try {
-    const {title,content} = req.body
-    const note = new Note({title,content})
+    const {title,content,isGroup,parentId} = req.body;
+    const minPositionNote = await Note.findOne({ parentId: parentId || null }).sort({ position: 1 });
+    let position = 0;
+    if (minPositionNote) {
+      position = minPositionNote.position - 1000;
+    }
+    const note = new Note({title,content,isGroup,parentId,position})
     const savedNote =  await note.save()
     res.status(201).json(savedNote);
  } catch (error) {
@@ -38,8 +43,8 @@ export async function createNote(req,res) {
 
 export async function updateNote(req,res) {
     try{
-        const{title,content} = req.body;
-        const updatedNote = await Note.findByIdAndUpdate(req.params.id,{title,content},{new:true})
+        const{title,content,isGroup,parentId,position} = req.body;
+        const updatedNote = await Note.findByIdAndUpdate(req.params.id,{title,content,isGroup,parentId,position},{new:true})
         if(!updatedNote){
             return res.status(404).json({message:"Note not found"});
         }
@@ -55,6 +60,9 @@ export async function deleteNote(req,res) {
     const deletedNote = await Note.findByIdAndDelete(req.params.id)
     if(!deletedNote){
         return res.status(404).json({message:"Note not found"});
+    }
+    if(deletedNote.isGroup){
+        await Note.updateMany({parentId: deletedNote._id}, {parentId: null});
     }
     res.status(200).json({message:"Note deleted successfully"});
  } catch (error) {
