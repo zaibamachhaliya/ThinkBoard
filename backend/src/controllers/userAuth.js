@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import Validate from "../Utils/Validetor.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import redisClient from '../config/redis.js';
 
 // ==================== REGISTER ====================
 export const register = async (req, res) => {
@@ -89,6 +90,43 @@ export const login = async (req, res) => {
     });
   } catch (err) {
     res.status(401).json({ error: err.message });
+  }
+};
+
+
+// ==================== LOGOUT ====================
+export const logoutUser = async (req, res) => {
+  try {
+    const token = req.cookies?.token;
+    
+    if (token) {
+      const decoded = jwt.decode(token);
+      if (decoded && decoded.exp) {
+        const ttl = decoded.exp - Math.floor(Date.now() / 1000);
+        if (ttl > 0) {
+          await redisClient.setex(`blacklist:${token}`, ttl, "blocked");
+          console.log("✅ Token blacklisted in Upstash Redis");
+        }
+      }
+    }
+
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      path: "/",
+    });
+
+    res.status(200).json({ 
+      success: true, 
+      message: "Logged out successfully" 
+    });
+  } catch (error) {
+    console.error("Logout error:", error);
+    res.status(500).json({ 
+      success: false, 
+      error: "Logout failed" 
+    });
   }
 };
 
