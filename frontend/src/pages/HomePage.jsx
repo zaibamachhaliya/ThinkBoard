@@ -57,14 +57,8 @@ const HomePage = () => {
   }
 
   return (
-
-    <div className="min-h-screen" style={{ background: "linear-gradient(to bottom right, #111827, #1f2937) " }}>
-
-
-
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       <Navbar />
-
-
       <div className="max-w-7xl mx-auto p-4 mt-6">
         {isRateLimited && <RateLimitedUI onRetry={() => window.location.reload()} />}
 
@@ -78,10 +72,8 @@ const HomePage = () => {
           </div>
         )}
       </div>
-
     </div>
   );
 };
 
 export default HomePage;
-
