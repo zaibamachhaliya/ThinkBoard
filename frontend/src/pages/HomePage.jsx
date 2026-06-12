@@ -24,14 +24,16 @@ const HomePage = () => {
   const [modalTargetId, setModalTargetId] = useState(null);
   const [groupTitle, setGroupTitle] = useState("");
 
+  // Top-level notes (not grouped under another note)
+  const topLevelNotes = notes.filter((n) => !n.groupId);
+
   const fetchNotes = async () => {
     try {
       const res = await api.get("/notes");
       setNotes(res.data);
       setIsRateLimited(false);
     } catch (error) {
-      console.log("Error fetching notes");
-      console.log(error.response);
+      console.log("Error fetching notes", error.response);
       if (error.response?.status === 429) {
         setIsRateLimited(true);
       } else {
@@ -47,32 +49,80 @@ const HomePage = () => {
       navigate("/login");
       return;
     }
-
-    const fetchNotes = async () => {
-      try {
-        const res = await api.get("/notes");
-        setNotes(res.data);
-        setIsRateLimited(false);
-      } catch (error) {
-        if (error.response?.status === 429) {
-          setIsRateLimited(true);
-        } else if (error.response?.status === 401) {
-          navigate("/login");
-        } else {
-          toast.success("Note reordered");
-        }
-      } catch (error) {
-        console.error("Error saving note position:", error);
-        toast.error("Failed to save reordered note");
-        fetchNotes(); // Revert
-      }
-    }
-  };
-
     if (user) {
       fetchNotes();
     }
   }, [user, authLoading, navigate]);
+
+  // Move a note to a new position
+  const handleMoveNote = async (draggedId, targetId) => {
+    const oldNotes = [...notes];
+    const dragged = notes.find((n) => n._id === draggedId);
+    const target = notes.find((n) => n._id === targetId);
+    if (!dragged || !target) return;
+
+    const newNotes = notes.filter((n) => n._id !== draggedId);
+    const targetIndex = newNotes.findIndex((n) => n._id === targetId);
+    newNotes.splice(targetIndex, 0, dragged);
+    setNotes(newNotes);
+
+    try {
+      await api.patch(`/notes/${draggedId}/reorder`, { targetId });
+      toast.success("Note reordered");
+    } catch (error) {
+      console.error("Error saving note position:", error);
+      toast.error("Failed to save reordered note");
+      setNotes(oldNotes);
+    }
+  };
+
+  // Combine two notes into a group
+  const handleCombineNotes = (sourceId, targetId) => {
+    setModalSourceId(sourceId);
+    setModalTargetId(targetId);
+    setShowNamingModal(true);
+  };
+
+  // Create a group from two notes
+  const handleCreateGroup = async () => {
+    if (!groupTitle.trim()) return;
+    try {
+      await api.post("/notes/group", {
+        sourceId: modalSourceId,
+        targetId: modalTargetId,
+        title: groupTitle,
+      });
+      toast.success(`Group "${groupTitle}" created!`);
+      setShowNamingModal(false);
+      setGroupTitle("");
+      setModalSourceId(null);
+      setModalTargetId(null);
+      fetchNotes();
+    } catch (error) {
+      console.error("Error creating group:", error);
+      toast.error("Failed to create group");
+    }
+  };
+
+  // Reorder notes within a group
+  const handleReorderNotes = async (groupId, draggedId, targetId) => {
+    const oldNotes = [...notes];
+    const dragged = notes.find((n) => n._id === draggedId);
+    if (!dragged) return;
+
+    const newNotes = notes.filter((n) => n._id !== draggedId);
+    const targetIndex = newNotes.findIndex((n) => n._id === targetId);
+    newNotes.splice(targetIndex, 0, dragged);
+    setNotes(newNotes);
+
+    try {
+      await api.patch(`/notes/${draggedId}/reorder`, { targetId, groupId });
+    } catch (error) {
+      console.error("Error reordering within group:", error);
+      toast.error("Failed to reorder note");
+      setNotes(oldNotes);
+    }
+  };
 
   if (authLoading || loading) {
     return (
