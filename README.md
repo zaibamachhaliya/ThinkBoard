@@ -14,18 +14,14 @@
 
 ### MERN Stack Note Management Application
 
-Create, organize, and manage notes and ideas through a React frontend, Express REST API, MongoDB persistence, and Redis-powered rate limiting.
+🧠 Create, organize, and manage notes and ideas through a React frontend, Express REST API, MongoDB persistence, and Redis-powered rate limiting.
 
 <br>
 
 ![License](https://img.shields.io/badge/License-ISC-blue.svg)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-
 </td>
 </tr>
 </table>
-
-<br>
 
 ![React](https://img.shields.io/badge/React-19-20232A?style=for-the-badge\&logo=react\&logoColor=61DAFB)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge\&logo=node.js\&logoColor=white)
@@ -49,7 +45,7 @@ Create, organize, and manage notes and ideas through a React frontend, Express R
 
 ---
 
-## Live Demo
+## 🎬 Live Demo
 
 The application is available at:
 
@@ -57,7 +53,7 @@ The application is available at:
 
 ---
 
-## Overview
+## 💫 Overview
 
 ThinkBoard is a MERN-stack note and idea management application designed for creating, storing, and organizing notes through a web interface.
 
@@ -65,31 +61,32 @@ The frontend is built with React and Vite, while the backend uses Express and Mo
 
 ---
 
-## Table of Contents
+## 📚 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Architecture](#architecture)
-- [Repository Structure](#repository-structure)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Environment Configuration](#environment-configuration)
-- [Running the Application](#running-the-application)
-- [Root Commands](#root-commands)
-- [Available Scripts](#available-scripts)
-- [Contributing](#contributing)
-- [Good First Contributions](#good-first-contributions)
-- [Troubleshooting](#troubleshooting)
-- [Maintainer](#maintainer)
-- [Contributors](#contributors)
-- [Project Support](#project-support)
-- [License](#license)
-- [Issues](#issues)
+1. [Preview](#preview)
+2. [🎬 Live Demo](#-live-demo)
+3. [💫 Overview](#-overview)
+4. [🎯 Features](#-features)
+5. [🛠️ Technology Stack](#️-technology-stack)
+6. [🖧 Architecture](#-architecture)
+7. [📂 Repository Structure](#-repository-structure)
+8. [🔍 Prerequisites](#-prerequisites)
+9. [🧪 Installation](#-installation)
+10. [🌲 Environment Configuration](#-environment-configuration)
+11. [🚀 Running the Application](#-running-the-application)
+12. [>_ Root Commands](#️-root-commands)
+13. [</> Available Scripts](#-available-scripts)
+14. [🤝 Contributing](#-contributing)
+15. [📝 Issues](#-issues)
+16. [🚨 Troubleshooting](#-troubleshooting)
+17. [👑 Maintainer](#-maintainer)
+18. [👥 Contributors](#-contributors)
+19. [❤️ Project Support](#️-project-support)
+20. [⚖️ License](#️-license)
 
 ---
 
-## Features
+## 🎯 Features
 
 | Feature              | Description                           |
 | -------------------- | ------------------------------------- |
@@ -104,37 +101,37 @@ The frontend is built with React and Vite, while the backend uses Express and Mo
 
 ---
 
-## Technology Stack
+## 🛠️ Technology Stack
 
 ### Frontend
 
 | Technology      | Purpose                  |
 | --------------- | ------------------------ |
-| React 19        | User Interface           |
-| Vite            | Development & Build Tool |
-| React Router    | Client-Side Routing      |
-| Tailwind CSS    | Styling                  |
-| DaisyUI         | UI Components            |
-| Axios           | HTTP Client              |
-| React Hot Toast | Notifications            |
-| Lucide React    | Icons                    |
+| ![React](https://img.shields.io/badge/React_19-20232A?style=flat-square&logo=react&logoColor=61DAFB) **React 19** | User Interface           |
+| ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) **Vite** | Development & Build Tool |
+| ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white) **React Router** | Client-Side Routing      |
+| ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white) **Tailwind CSS** | Styling                  |
+| ![DaisyUI](https://img.shields.io/badge/DaisyUI-5132BF?style=flat-square&logo=daisyui&logoColor=white) **DaisyUI** | UI Components            |
+| ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white) **Axios** | HTTP Client              |
+| ![React Hot Toast](https://img.shields.io/badge/React_Hot_Toast-FF4081?style=flat-square&logo=react&logoColor=white) **React Hot Toast** | Notifications            |
+| ![Lucide React](https://img.shields.io/badge/Lucide_React-F59E0B?style=flat-square&logo=lucide&logoColor=white) **Lucide React** | Icons                    |
 
 ### Backend
 
 | Technology    | Purpose                       |
 | ------------- | ----------------------------- |
-| Node.js       | Runtime Environment           |
-| Express.js    | REST API                      |
-| MongoDB       | Database                      |
-| Mongoose      | Object Data Modeling          |
-| Upstash Redis | Rate Limiting                 |
-| Dotenv        | Environment Configuration     |
-| CORS          | Cross-Origin Resource Sharing |
-| Nodemon       | Development Server            |
+| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) **Node.js** | Runtime Environment           |
+| ![Express.js](https://img.shields.io/badge/Express.js-000000?style=flat-square&logo=express&logoColor=white) **Express.js** | REST API                      |
+| ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white) **MongoDB** | Database                      |
+| ![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=flat-square&logo=mongoose&logoColor=white) **Mongoose** | Object Data Modeling          |
+| ![Upstash Redis](https://img.shields.io/badge/Upstash_Redis-00E676?style=flat-square&logo=upstash&logoColor=white) **Upstash Redis** | Rate Limiting                 |
+| ![Dotenv](https://img.shields.io/badge/Dotenv-ECD53F?style=flat-square&logo=dotenv&logoColor=black) **Dotenv** | Environment Configuration     |
+| ![CORS](https://img.shields.io/badge/CORS-FF6F00?style=flat-square&logo=express&logoColor=white) **CORS** | Cross-Origin Resource Sharing |
+| ![Nodemon](https://img.shields.io/badge/Nodemon-76D04B?style=flat-square&logo=nodemon&logoColor=white) **Nodemon** | Development Server            |
 
 ---
 
-## Architecture
+## 🖧 Architecture
 
 ```text
 ┌─────────────────────────┐
@@ -155,7 +152,7 @@ The frontend is built with React and Vite, while the backend uses Express and Mo
 
 ---
 
-## Repository Structure
+## 📂 Repository Structure
 
 ```text
 ThinkBoard/
@@ -183,7 +180,7 @@ ThinkBoard/
 
 ---
 
-## Prerequisites
+## 🧪 Prerequisites
 
 Ensure the following software is installed before running the project:
 
@@ -201,7 +198,7 @@ npm -v
 
 ---
 
-## Installation
+## 🚀 Installation
 
 ### Clone the Repository
 
@@ -226,7 +223,7 @@ npm install
 
 ---
 
-## Environment Configuration
+## 🌲 Environment Configuration
 
 Create a `.env` file inside the `backend` directory.
 
@@ -262,7 +259,7 @@ ThinkBoard supports both local MongoDB instances and MongoDB Atlas.
 MONGO_URI=mongodb://localhost:27017/thinkboard
 ```
 
-#### MongoDB Atlas
+#### 🍃 MongoDB Atlas
 
 1. Create a MongoDB Atlas cluster.
 2. Create a database user.
@@ -270,7 +267,7 @@ MONGO_URI=mongodb://localhost:27017/thinkboard
 4. Copy the connection string from Atlas.
 5. Replace `MONGO_URI` in your `.env` file with the Atlas connection string.
 
-### Upstash Redis Setup
+### 🔴 Upstash Redis Setup
 
 Upstash Redis is used for API rate limiting.
 
@@ -284,8 +281,7 @@ Upstash Redis is used for API rate limiting.
 
 --- 
 
-
-## Running the Application
+## 🚀 Running the Application
 
 ### Development
 
@@ -308,7 +304,7 @@ http://localhost:5173
 
 ---
 
-## Root Commands
+## >_ Root Commands
 
 > **Note:** `npm start` launches only the backend server. The frontend must be started separately during development using `npm run dev` inside the `frontend` directory.
 
@@ -319,7 +315,7 @@ http://localhost:5173
 
 ---
 
-## Available Scripts
+## </> Available Scripts
 
 ### Backend
 
@@ -339,7 +335,7 @@ http://localhost:5173
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome and appreciated. Whether you're fixing bugs, improving documentation, enhancing the user interface, or proposing new features, your contributions help improve ThinkBoard.
 
@@ -363,7 +359,7 @@ git push origin feature/your-feature
 
 Open a Pull Request describing the changes and their purpose.
 
-## Good First Contributions
+### 🏆 Good First Contributions
 
 New contributors can help by:
 
@@ -373,9 +369,7 @@ New contributors can help by:
 - Refactoring components
 - Improving accessibility
 
----
-
-### Contribution Guidelines
+### 📜 Contribution Guidelines
 
 * Follow the existing project structure.
 * Keep changes focused on a single concern.
@@ -385,7 +379,18 @@ New contributors can help by:
 
 ---
 
-## Troubleshooting
+## 📝 Issues
+
+For bug reports or feature requests:
+
+**1.** Search existing issues.
+**2.** Open a new issue if necessary.
+**3.** Provide reproduction steps.
+**4.** Include relevant logs and environment details.
+
+---
+
+## 🚨 Troubleshooting
 
 ### MongoDB Connection Issues
 
@@ -408,13 +413,13 @@ npm install
 
 ---
 
-## Maintainer
+## 👑 Maintainer
 
 Maintained by **@niharika-mente**
 
 ---
 
-## Contributors
+## 👥 Contributors
 
 Thanks to all the amazing people who contribute to **ThinkBoard** 🚀
 
@@ -426,7 +431,7 @@ Thanks to all the amazing people who contribute to **ThinkBoard** 🚀
 
 ---
 
-## Project Support
+## ❤️ Project Support
 
 <p align="center">
   <a href="https://github.com/niharika-mente/ThinkBoard/stargazers">
@@ -440,22 +445,11 @@ Thanks to all the amazing people who contribute to **ThinkBoard** 🚀
 
 ---
 
-## License
+## ⚖️ License
 
 Distributed under the ISC License.
 
 See the `LICENSE` file for details.
-
----
-
-## Issues
-
-For bug reports or feature requests:
-
-1. Search existing issues.
-2. Open a new issue if necessary.
-3. Provide reproduction steps.
-4. Include relevant logs and environment details.
 
 ---
 
