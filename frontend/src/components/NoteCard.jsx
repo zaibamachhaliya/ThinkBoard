@@ -20,8 +20,72 @@ const NoteCard = ({ note, setNotes }) => {
       toast.success("Note deleted successfully");
     } catch (error) {
       console.log("Error in handleDelete", error);
-      toast.error("Failed to delete note");
+      toast.error("Failed to delete");
     }
+  };
+
+  const handleDragStart = (e) => {
+    e.dataTransfer.setData("text/plain", note._id);
+    e.dataTransfer.effectAllowed = "move";
+
+    const dragPreview = e.currentTarget.cloneNode(true);
+    dragPreview.style.position = "absolute";
+    dragPreview.style.top = "-1000px";
+    dragPreview.style.left = "-1000px";
+    dragPreview.style.width = `${e.currentTarget.offsetWidth}px`;
+    dragPreview.style.pointerEvents = "none";
+    dragPreview.style.opacity = "0.55";
+    dragPreview.style.transform = "scale(0.98)";
+    dragPreview.style.filter = "saturate(0.9) blur(0.1px)";
+    document.body.appendChild(dragPreview);
+    e.dataTransfer.setDragImage(dragPreview, e.currentTarget.offsetWidth / 2, e.currentTarget.offsetHeight / 2);
+    window.requestAnimationFrame(() => {
+      dragPreview.remove();
+    });
+
+    setActiveDragId(note._id);
+  };
+
+  const getDragIndicatorFromPoint = (clientX, clientY, currentTarget) => {
+    const rect = currentTarget.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const width = rect.width;
+    const height = rect.height;
+
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      if (y < height * 0.25) return "before";
+      if (y > height * 0.75) return "after";
+      return "stack";
+    }
+
+    if (x < width * 0.25) return "before";
+    if (x > width * 0.75) return "after";
+    return "stack";
+  };
+
+  const handleDragEnd = () => {
+    setActiveDragId(null);
+    setDragIndicator(null);
+    setChildDragIndicator(null);
+  };
+
+  const handleDragOver = (e) => {
+    if (activeDragId === note._id) return; // Cannot drop on itself
+
+    if (note.isGroup) {
+      // Don't drag children into their current parent
+      const childrenIds = allNotes
+        .filter((n) => n.parentId === note._id)
+        .map((n) => n._id);
+      if (childrenIds.includes(activeDragId)) return;
+    }
+
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setDragIndicator(getDragIndicatorFromPoint(e.clientX, e.clientY, e.currentTarget));
   };
 
   const handleEdit = (e, id) => {

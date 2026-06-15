@@ -10,7 +10,20 @@ const noteSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: true
+        default: ""
+    },
+    isGroup: {
+        type: Boolean,
+        default: false
+    },
+    parentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Note",
+        default: null
+    },
+    position: {
+        type: Number,
+        default: 0
     }
   },
   {timestamps: true}//this will automatically add createdAt and updatedAt fields

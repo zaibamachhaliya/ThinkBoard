@@ -1,60 +1,12 @@
 
-import { Link, useNavigate } from "react-router-dom";
-import { PlusIcon, LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
+import { PlusIcon, Sun, Moon, LogOut } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useState, useRef, useEffect } from "react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  // Get first letter from user name
-  const getFirstLetter = () => {
-    if (user?.name) {
-      return user.name.charAt(0).toUpperCase();
-    }
-    if (user?.email) {
-      return user.email.charAt(0).toUpperCase();
-    }
-    return "U";
-  };
-
-  // Get random but consistent color based on name
-  const getAvatarColor = () => {
-    const name = user?.name || user?.email || "User";
-
-    const colors = [
-      "from-blue-600 to-sky-400",
-      "from-blue-500 to-cyan-500",
-      "from-sky-500 to-blue-700",
-      "from-cyan-400 to-blue-600",
-      "from-blue-400 to-indigo-500",
-      "from-sky-400 to-cyan-600",
-      "from-blue-500 to-sky-300",
-      "from-indigo-500 to-blue-500"
-    ];
-    const index = name.length % colors.length;
-    return colors[index];
-  };
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-    setIsDropdownOpen(false);
-  };
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="bg-base-300/50 backdrop-blur-sm border-b border-base-content/10 sticky top-0 z-50">
@@ -71,11 +23,27 @@ const Navbar = () => {
 
           <div className="flex items-center gap-3">
             {user ? (
-              <>
-                {/* New Note Button */}
-                <Link
-                  to="/create"
-                  className="btn btn-primary gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300"
+              <div className="flex items-center gap-2">
+                <Link 
+                  to="/create" 
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                >
+                  <PlusIcon size={16} />
+                  <span>New Note</span>
+                </Link>
+                <button
+                  onClick={logout}
+                  className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-850 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2">
+                <Link 
+                  to="/login" 
+                  className="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                   <PlusIcon className="size-5" />
                   <span>New Note</span>
