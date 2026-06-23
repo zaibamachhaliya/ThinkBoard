@@ -8,7 +8,9 @@ const rateLimiter = async (req, res, next) => {
   }
   
   try {
-    const { success, limit, remaining, reset } = await ratelimit.limit("my-rate-limit");
+    const ip = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.socket.remoteAddress || req.ip;
+    const identifier = req.user?._id || ip || "global-rate-limit";
+    const { success, limit, remaining, reset } = await ratelimit.limit(identifier);
     if (!success) {
       return res.status(429).json({ message: "Too many requests please try after some time" });
     }
