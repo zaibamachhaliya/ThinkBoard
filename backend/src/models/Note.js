@@ -4,6 +4,12 @@ import mongoose from "mongoose";
 //2-create model
 //3-export model
 const noteSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        index: true
+    },
     title: {
         type: String,
         required: true
