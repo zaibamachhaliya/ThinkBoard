@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import Note from "../models/Note.js";
 
-export async function getAllNotes(_, res) {
+export async function getAllNotes(req, res) {
     try {
-        const notes = await Note.find().sort({ createdAt: -1 });
+        const notes = await Note.find({ userId: req.user._id }).sort({ createdAt: -1 });
 
         res.status(200).json(notes);
     } catch (error) {
@@ -25,7 +25,7 @@ export async function getNoteById(req, res) {
             });
         }
 
-        const note = await Note.findById(id);
+        const note = await Note.findOne({ _id: id, userId: req.user._id });
 
         if (!note) {
             return res.status(404).json({
@@ -56,6 +56,7 @@ export async function createNote(req, res) {
         }
 
         const note = new Note({
+            userId: req.user._id,
             title: title.trim(),
             content: content.trim(),
         });
@@ -91,8 +92,8 @@ export async function updateNote(req, res) {
         }
      
 
-        const updatedNote = await Note.findByIdAndUpdate(
-            id,
+        const updatedNote = await Note.findOneAndUpdate(
+            { _id: id, userId: req.user._id },
             {
                 title: title.trim(),
                 content: content.trim(),
@@ -129,7 +130,7 @@ export async function deleteNote(req, res) {
             });
         }
 
-        const deletedNote = await Note.findByIdAndDelete(id);
+        const deletedNote = await Note.findOneAndDelete({ _id: id, userId: req.user._id });
 
         if (!deletedNote) {
             return res.status(404).json({
