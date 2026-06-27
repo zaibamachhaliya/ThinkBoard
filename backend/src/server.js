@@ -5,6 +5,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import { fileURLToPath } from "url";
 import dns from "dns";
+import jwt from "jsonwebtoken";
 
 // Routes
 import notesRoutes from "./routes/notesRoutes.js";
@@ -47,8 +48,23 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 app.use(cookieParser());
 
-// // Rate limiting
-app.use(rateLimiter);
+// Optional auth to populate req.user for rateLimiter
+const optionalAuthenticateUser = (req, res, next) => {
+  try {
+    const token = req.cookies?.token;
+    if (token) {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
+    }
+  } catch (error) {
+    // Ignore verification errors (expired, invalid) for optional auth
+  }
+  next();
+};
+
+// Rate limiting and optional auth applied only to API routes
+app.use("/api", rateLimiter);
+app.use("/api", optionalAuthenticateUser);
 
 // ==================== ROUTES ====================
 app.use("/api/notes", notesRoutes);
