@@ -7,6 +7,7 @@ import { authenticateUser } from "../middleware/authMiddleware.js";
 authRouter.post("/register", register);
 authRouter.post("/login", login);
 authRouter.get("/me", authenticateUser, getCurrentUser); 
+// Log out current user and clear session cookie
 authRouter.post("/logout", logout);
 
 
