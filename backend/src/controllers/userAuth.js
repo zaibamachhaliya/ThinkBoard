@@ -119,6 +119,9 @@ export const getCurrentUser = async (req, res) => {
 };
 
 // ==================== LOGOUT ====================
+/**
+ * Log out the current user by clearing the authentication token cookie.
+ */
 export const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
