@@ -4,6 +4,7 @@ import { authenticateUser } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// Protect all notes routes - only authenticated users can access notes endpoints
 router.use(authenticateUser);
 
 router.get("/", getAllNotes);

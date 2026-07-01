@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import Note from "../models/Note.js";
 
+/**
+ * Get all notes belonging to the authenticated user.
+ */
 export async function getAllNotes(req, res) {
     try {
         const notes = await Note.find({ userId: req.user._id }).sort({ createdAt: -1 });
@@ -15,6 +18,9 @@ export async function getAllNotes(req, res) {
     }
 }
 
+/**
+ * Get a specific note by ID, verifying that it belongs to the authenticated user.
+ */
 export async function getNoteById(req, res) {
     try {
         const { id } = req.params;
@@ -43,6 +49,9 @@ export async function getNoteById(req, res) {
     }
 }
 
+/**
+ * Create a new note associated with the authenticated user's ID.
+ */
 export async function createNote(req, res) {
     try {
         const { title, content } = req.body;
@@ -73,6 +82,9 @@ export async function createNote(req, res) {
     }
 }
 
+/**
+ * Update a specific note after verifying ownership by the authenticated user.
+ */
 export async function updateNote(req, res) {
     try {
         const { id } = req.params;
@@ -120,6 +132,9 @@ export async function updateNote(req, res) {
     }
 }
 
+/**
+ * Delete a specific note after verifying ownership by the authenticated user.
+ */
 export async function deleteNote(req, res) {
     try {
         const { id } = req.params;
